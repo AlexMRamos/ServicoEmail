@@ -1,5 +1,6 @@
 package ramos.monteiro.alex;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,35 +8,32 @@ public class Email {
 	
 	private String remetente;
 	private String destinatario;
-	private Date dataEnvio;
-	private Date dataRecebido;
+	private Calendar dataEnvio;
+	private Calendar dataRecebido;
 	private String assunto;
 	private String texto;
-	
-	public Email(String remetente, Date dataEnvio, Date dataRecebido, String assunto, String texto) {
-		this.remetente = remetente;
-		this.dataEnvio = dataEnvio;
-		this.dataRecebido = dataRecebido;
-		this.assunto = assunto;
-		this.texto = texto;
-	}
-	
 	public String getRemetente() {
 		return remetente;
 	}
 	public void setRemetente(String remetente) {
 		this.remetente = remetente;
 	}
-	public Date getDataEnvio() {
+	public String getDestinatario() {
+		return destinatario;
+	}
+	public void setDestinatario(String destinatario) {
+		this.destinatario = destinatario;
+	}
+	public Calendar getDataEnvio() {
 		return dataEnvio;
 	}
-	public void setDataEnvio(Date dataEnvio) {
+	public void setDataEnvio(Calendar dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
-	public Date getDataRecebido() {
+	public Calendar getDataRecebido() {
 		return dataRecebido;
 	}
-	public void setDataRecebido(Date dataRecebido) {
+	public void setDataRecebido(Calendar dataRecebido) {
 		this.dataRecebido = dataRecebido;
 	}
 	public String getAssunto() {
@@ -50,26 +48,15 @@ public class Email {
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
-	public String getDestinatario() {
-		return destinatario;
-	}
-
-	public void setDestinatario(String destinatario) {
-		this.destinatario = destinatario;
-	}
-
-
 	@Override
 	public String toString() {
-		return "Email [remetente=" + remetente + ", destinatario=" + destinatario + ", dataEnvio=" + dataEnvio
-				+ ", dataRecebido=" + dataRecebido + ", assunto=" + assunto + ", texto=" + texto + "]";
+		return "Email [remetente=" + remetente + ", destinatario=" + destinatario + ", assunto=" + assunto + ", texto="
+				+ texto + "]";
 	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(assunto, dataEnvio, dataRecebido, remetente, texto);
+		return Objects.hash(assunto, destinatario, remetente, texto);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -79,10 +66,23 @@ public class Email {
 		if (getClass() != obj.getClass())
 			return false;
 		Email other = (Email) obj;
-		return Objects.equals(assunto, other.assunto) && Objects.equals(dataEnvio, other.dataEnvio)
-				&& Objects.equals(dataRecebido, other.dataRecebido) && Objects.equals(remetente, other.remetente)
-				&& Objects.equals(texto, other.texto);
+		return Objects.equals(assunto, other.assunto) && Objects.equals(destinatario, other.destinatario)
+				&& Objects.equals(remetente, other.remetente) && Objects.equals(texto, other.texto);
 	}
+	public Email(String remetente, String destinatario, Calendar dataEnvio, Calendar dataRecebido, String assunto,
+			String texto) {
+		super();
+		this.remetente = remetente;
+		this.destinatario = destinatario;
+		this.dataEnvio = dataEnvio;
+		this.dataRecebido = dataRecebido;
+		this.assunto = assunto;
+		this.texto = texto;
+	}
+	public Email() {
+		super();
+	}
+	
 
 
 	

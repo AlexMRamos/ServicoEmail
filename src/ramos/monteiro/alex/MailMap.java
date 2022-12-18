@@ -1,6 +1,7 @@
 package ramos.monteiro.alex;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,18 +59,37 @@ public class MailMap {
 	}
 	
 //	d) Criar uma lista com todos os endereços que enviaram mails contendo no seu assunto uma lista de palavras dada como parâmetro;
-	public List<Email> buscaEmailsPorAssunto(List<String> assunto){
+	public List<Email> buscaListaEmailsPorAssunto(List<String> assunto){
 		List<Email> emailAssunto = new ArrayList<>();
 		this.caixaEmail.get(this.email).stream().filter(email -> buscaAssunto(email, assunto)).forEach(email -> emailAssunto.add(email));
 		return emailAssunto;
 	}
 
 	private boolean buscaAssunto(Email email, List<String> assunto) {
-		return assunto.stream().anyMatch(s -> s.contains(email.getAssunto()));
+		return assunto.stream().anyMatch(s -> email.getAssunto().contains(s));
 	}
 	
+//	e) O mesmo que a questão anterior, mas criando um conjunto contendo os mails;
+	public Map<String,List<Email>> buscaConjuntoEmailsPorAssunto(List<String> assunto){
+		 Map<String,List<Email>> emailColecao = new HashMap<>();
+		this.caixaEmail.get(this.email).stream().filter(email -> buscaAssunto(email, assunto)).forEach(email -> adicionaEmailColecao(email,emailColecao));
+		return emailColecao;
+	}
 	
+	private void adicionaEmailColecao(Email email,  Map<String,List<Email>> emailColecao){
+		if(emailColecao.containsKey(email.getRemetente())){
+			emailColecao.get(email.getRemetente()).add(email);
+		}else {
+			List<Email> lista = new ArrayList<>();
+			lista.add(email);
+			emailColecao.put(email.getRemetente(), lista);
+		}
+	}
 	
+//	f) Eliminar todos os e-mails recebidos antes de uma data que é dada como parâmetro;
+	public void removerEmailPorData(List<Email> emails, Calendar data) {	
+		emails.removeIf(email -> email.getDataEnvio().before(data));		
+	}
 	
 
 }
