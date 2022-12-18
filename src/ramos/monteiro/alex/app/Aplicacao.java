@@ -16,13 +16,18 @@ public class Aplicacao {
 		
 		Calendar hoje = Calendar.getInstance();
 		Calendar ontem = Calendar.getInstance(); ontem.add(Calendar.DATE, -1);
+		Calendar amanha = Calendar.getInstance(); ontem.add(Calendar.DATE, +1);
 		
-		Email emailAlex = new Email("Alex","" ,Calendar.getInstance(),Calendar.getInstance(),"Dev PL", "Bom dia Senhores");
-		Email emailDaniel = new Email("Daniel","", Calendar.getInstance(),Calendar.getInstance(),"Dev PL", "Boa Tarde Senhor");
-		Email emailDaniel1 = new Email("Daniel","", ontem,Calendar.getInstance(),"Vaga Nava", "Boa Tarde Senhor");
+		
+		Email emailAlex = new Email("Alex","" ,hoje,hoje,"Dev PL", "Bom dia Senhores");
+		Email emailDaniel = new Email("Daniel","", hoje,hoje,"Dev PL", "Boa Tarde Senhor");
+		Email emailDaniel1 = new Email("Daniel","", ontem,hoje,"Vaga Nava", "Boa Tarde Senhor");
+		Email emailDaniel2 = new Email("Daniel","", amanha,amanha,"Vaga Nava", "Boa Tarde Senhor");
 		Email emailHotts = new Email("Hotts","", ontem,ontem,"Analista PL", "Bom noite Colega");
 		Email emailHotts1 = new Email("Hotts","", ontem,ontem,"Fofo bb", "Bom noite Colega");
+		Email emailHotts2 = new Email("Hotts","", amanha,amanha,"Fofo bb", "Bom noite Colega");
 		Email emailLucas = new Email("Lucas","", hoje,hoje,"Fofo bb", "Bom noite Colega");
+		Email emailPortugal = new Email("Mario@Portugal.com","", hoje,hoje,"Oportunidade Emprego", "Bom noite Amigo Desenvolvedor");
 		
 		
 		Map<String, List<Email>> caixaEntrada = new HashMap<>();
@@ -40,6 +45,10 @@ public class Aplicacao {
 		emailMap.recebeEmail(emailHotts1);
 		emailMap.recebeEmail(emailHotts1);
 		emailMap.recebeEmail(emailLucas);
+		emailMap.recebeEmail(emailPortugal);
+		emailMap.recebeEmail(emailHotts2);
+		emailMap.recebeEmail(emailHotts2);
+		emailMap.recebeEmail(emailDaniel2);
 		
 		
 		
@@ -64,6 +73,11 @@ public class Aplicacao {
 		
 		System.out.println("Total de Email's: " + emailMap.totalEmail());
 		System.out.println("Total de Email por rementente =  Hotts: " + emailMap.totalEmailRemetente(emailHotts.getRemetente()));
+		
+		List<Email> emailRecebidosHoje = emailMap.emailRecebidosHoje(emailMap.getCaixaEmail().get(emailAlex.getRemetente()));
+		System.out.println("Total de Emails Hoje: " + emailRecebidosHoje.size());
+		System.out.println(emailRecebidosHoje.toString());
+
 
 		
 		System.out.println("Total de Email's: " + emailMap.totalEmail());
@@ -79,6 +93,15 @@ public class Aplicacao {
 		emailMap.removerEmailPorPalavraAssunto(emailMap.getCaixaEmail().get(emailAlex.getRemetente()), assuntos);
 
 		System.out.println("Total de Email's apos remocao por Assunto:" + emailMap.totalEmail());
+		
+		
+		
+		System.out.println("Total Daniel Antes: " + emailMap.totalEmailRemetente(emailHotts2.getRemetente()));
+		emailMap.removerEmailPorRemetenteData(emailMap.getCaixaEmail().get(emailMap.getEmail()), hoje, emailHotts2.getRemetente());
+		System.out.println("Total de Email Daniel Apos remocao por Data e Remetente: " + emailMap.totalEmailRemetente(emailHotts2.getRemetente()));
+		
+		System.out.println(emailMap.buscaListaEmailsPorOrigem("Portugal").toString());
+		
 
 		
 	}
