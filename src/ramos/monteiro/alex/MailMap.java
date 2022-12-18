@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MailMap {
 
@@ -66,7 +67,7 @@ public class MailMap {
 	}
 
 	private boolean buscaAssunto(Email email, List<String> assunto) {
-		return assunto.stream().anyMatch(s -> email.getAssunto().contains(s));
+		return assunto.stream().anyMatch(s -> email.getAssunto().toLowerCase().contains(s.toLowerCase()));
 	}
 	
 //	e) O mesmo que a questão anterior, mas criando um conjunto contendo os mails;
@@ -90,6 +91,21 @@ public class MailMap {
 	public void removerEmailPorData(List<Email> emails, Calendar data) {	
 		emails.removeIf(email -> email.getDataEnvio().before(data));		
 	}
+	
+//	g) Criar uma lista dos endereços que hoje enviaram mails;
+	public List<Email> emailRecebidosHoje(List<Email> emails){
+//		return emails.stream().filter(email -> email.getDataEnvio().get(Calendar.DATE));
+	}
+
+	
+//	h) Dada uma lista de palavras, eliminar todos os mails de um dado endereço que no seu assunto contenham uma qualquer destas (anti-spam);
+	public void removerEmailPorPalavraAssunto(List<Email> emails, List<String> assunto) {
+//		this.caixaEmail.get(this.email).stream().filter(email -> buscaAssunto(email, assunto)).allMatch((mail -> emails.remove(mail)));
+		emails.removeIf(mail -> buscaAssunto(mail, assunto));
+	}
+
+	
+	
 	
 
 }

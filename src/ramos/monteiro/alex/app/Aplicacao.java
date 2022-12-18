@@ -19,7 +19,10 @@ public class Aplicacao {
 		
 		Email emailAlex = new Email("Alex","" ,Calendar.getInstance(),Calendar.getInstance(),"Dev PL", "Bom dia Senhores");
 		Email emailDaniel = new Email("Daniel","", Calendar.getInstance(),Calendar.getInstance(),"Dev PL", "Boa Tarde Senhor");
+		Email emailDaniel1 = new Email("Daniel","", ontem,Calendar.getInstance(),"Vaga Nava", "Boa Tarde Senhor");
 		Email emailHotts = new Email("Hotts","", ontem,ontem,"Analista PL", "Bom noite Colega");
+		Email emailHotts1 = new Email("Hotts","", ontem,ontem,"Fofo bb", "Bom noite Colega");
+		Email emailLucas = new Email("Lucas","", hoje,hoje,"Fofo bb", "Bom noite Colega");
 		
 		
 		Map<String, List<Email>> caixaEntrada = new HashMap<>();
@@ -31,8 +34,12 @@ public class Aplicacao {
 		emailMap.recebeEmail(emailDaniel);
 		emailMap.recebeEmail(emailDaniel);
 		emailMap.recebeEmail(emailDaniel);
+		emailMap.recebeEmail(emailDaniel1);
 		emailMap.recebeEmail(emailHotts);
 		emailMap.recebeEmail(emailHotts);
+		emailMap.recebeEmail(emailHotts1);
+		emailMap.recebeEmail(emailHotts1);
+		emailMap.recebeEmail(emailLucas);
 		
 		
 		
@@ -50,19 +57,28 @@ public class Aplicacao {
 		List<Email>listaBusca = emailMap.buscaListaEmailsPorAssunto(assuntos);
 		 Map<String,List<Email>>mapBusca = emailMap.buscaConjuntoEmailsPorAssunto(assuntos);
 		
+		System.out.println("Lista Email's por assunto: ");
 		System.out.println(listaBusca.toString());
+		System.out.println("Colecao Email's por assunto: ");
 		System.out.println(mapBusca.toString());
 		
 		System.out.println("Total de Email's: " + emailMap.totalEmail());
-		System.out.println("Total de Email de  Hotts: " + emailMap.totalEmailRemetente(emailHotts.getRemetente()));
+		System.out.println("Total de Email por rementente =  Hotts: " + emailMap.totalEmailRemetente(emailHotts.getRemetente()));
 
 		
+		System.out.println("Total de Email's: " + emailMap.totalEmail());
 		emailMap.removerEmailPorData(emailMap.getCaixaEmail().get(emailMap.getEmail()), hoje);
+		System.out.println("Total de Email Apos remocao por Data: " + emailMap.totalEmail());
 		
+
 		
 		System.out.println("Total de Email's: " + emailMap.totalEmail());
-		System.out.println("Total de Email de  Hotts: " + emailMap.totalEmailRemetente(emailHotts.getRemetente()));
-		
+		System.out.println("Email's: " + emailMap.getCaixaEmail().get(emailAlex.getRemetente()).toString());
+
+
+		emailMap.removerEmailPorPalavraAssunto(emailMap.getCaixaEmail().get(emailAlex.getRemetente()), assuntos);
+
+		System.out.println("Total de Email's apos remocao por Assunto:" + emailMap.totalEmail());
 
 		
 	}
